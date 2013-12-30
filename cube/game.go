@@ -87,7 +87,7 @@ func renderLoopFunc(controlCh *controlCh) loop.LoopFunc {
 			// At each tick render a frame and swap buffers.
 			case <-ticker.C:
 				state.angle += 0.05
-				state.cube.RotateY(state.angle)
+				state.cube.Rotate(state.angle, [3]float32{0, 1, 0})
 				state.world.Draw()
 				egl.SwapBuffers(state.eglState.Display, state.eglState.Surface)
 

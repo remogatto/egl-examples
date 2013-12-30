@@ -82,12 +82,12 @@ type Cube struct {
 	uniformTexture                uint32
 	uniformModel                  uint32
 	uniformProjectionView         uint32
-	model, projectionView         mathgl.Mat4
+	model, projectionView         mathgl.Mat4f
 }
 
 func NewCube() *Cube {
 	cube := new(Cube)
-	cube.model.Identity()
+	cube.model = mathgl.Ident4f()
 
 	cube.Vertices = NewBufferFloat([]float32{
 		// Front
@@ -184,12 +184,8 @@ func NewCube() *Cube {
 	return cube
 }
 
-func (c *Cube) RotateY(angle float32) {
-	c.model.RotationY(angle)
-}
-
-func (c *Cube) RotateZ(angle float32) {
-	c.model.RotationZ(angle)
+func (c *Cube) Rotate(angle float32, axis mathgl.Vec3f) {
+	c.model = mathgl.HomogRotate3D(angle, axis)
 }
 
 func (c *Cube) AttachTextureFromFile(filename string) error {
